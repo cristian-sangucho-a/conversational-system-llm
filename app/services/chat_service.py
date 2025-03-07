@@ -20,7 +20,7 @@ class ChatService:
             elif msg["role"] == "ai":
                 chat_history.append(AIMessage(content=msg["content"]))
         
-        chat_history.append(HumanMessage(content=msg["message"]))
+        chat_history.append(HumanMessage(content=message))
         
         response = await graph.ainvoke({
             "user_name": str(user_id),

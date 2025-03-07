@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Form, UploadFile, File
-from app.services.ask_via_audio_service import AskViaAudioService
+from services.ask_via_audio_service import AskViaAudioService
 from core.dependencies import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 
