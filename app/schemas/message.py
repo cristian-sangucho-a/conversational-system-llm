@@ -3,16 +3,16 @@ from pydantic import BaseModel, Field
 class ChatRequest(BaseModel):
     message: str = Field(
         ...,
-        description="Mensaje de entrada del usuario"
+        description="User input message"
     )
     user_id: int = Field(
         ...,
-        description="Identificador único del usuario",
+        description="Unique user identifier",
         example=123
     )
     conversation_id: int = Field(
         ...,
-        description="Identificador único de la conversación",
+        description="Unique conversation identifier",
         example=456
     )
     

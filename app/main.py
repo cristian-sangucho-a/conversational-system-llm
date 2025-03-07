@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from routers.chat_router import chat_router
+from routers.conversation_router import conversation_router
 
 app = FastAPI(
     title="My API",
@@ -13,3 +14,4 @@ def read_root():
     return {"Hello": "World"}
 
 app.include_router(chat_router, prefix="/chat")
+app.include_router(conversation_router, prefix="/conversation")
