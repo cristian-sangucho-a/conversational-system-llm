@@ -1,4 +1,4 @@
-from app.core.database import Session
+from core.database import Session
 
 async def get_db():
     async with Session() as session:
