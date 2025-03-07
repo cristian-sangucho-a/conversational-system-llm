@@ -15,19 +15,21 @@ class ChatService:
         # type input messages
         chat_history = []
         for msg in messages_of_conversation:
-            if msg["role"] == "user":
-                chat_history.append(HumanMessage(content=msg["content"]))
-            elif msg["role"] == "ai":
-                chat_history.append(AIMessage(content=msg["content"]))
-        
+            if msg.role == "user":
+                chat_history.append(HumanMessage(content=msg.text))
+            elif msg.role == "ai":
+                chat_history.append(AIMessage(content=msg.text))
+        # add new message
         chat_history.append(HumanMessage(content=message))
         
+        # call the graph
         response = await graph.ainvoke({
             "user_name": str(user_id),
             "messages": chat_history
         })
         ai_response = response["messages"][-1].content
         
+        # save the response
         await self.message_repository.save_request_message(
             text=ai_response,
             role="ai",

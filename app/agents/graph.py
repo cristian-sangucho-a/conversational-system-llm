@@ -4,8 +4,7 @@ from agents.model import bound_model
 from agents.model import tool_node
 
 
-class GraphState(TypedDict):
-    messages: list
+class GraphState(MessagesState):
     user_name: str
     
 def should_continue(state: MessagesState):
@@ -19,8 +18,8 @@ def should_continue(state: MessagesState):
 
 
 # Define the function that calls the model
-def call_model(state: MessagesState):
-    response = bound_model.invoke(state["messages"])
+async def call_model(state: MessagesState):
+    response = await bound_model.ainvoke(state["messages"])
     return {"messages": response}
 
 # Define a new graph
