@@ -10,6 +10,7 @@ class ChatService:
         self.message_repository = MessageRepository(db)
         self.user_repository = UserRepository(db)
 
+        
     async def chat(self, message: str, user_id: int, conversation_id: int):
 
         # get the conversation messages
@@ -31,6 +32,10 @@ class ChatService:
         # config
         config = {"configurable": {"thread_id": str(conversation_id)}}
 
+        
+        #config
+        config = {"configurable": {"thread_id": str(conversation_id)}}
+
         # call the graph
         response = await graph.ainvoke(
             {
@@ -39,6 +44,13 @@ class ChatService:
             },
             config
         )
+        response = await graph.ainvoke(
+            {
+            "user_name": username,
+            "messages": chat_history
+            },
+            config
+            )
         ai_response = response["messages"][-1].content
 
         # save the response

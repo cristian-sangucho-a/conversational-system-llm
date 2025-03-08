@@ -7,6 +7,7 @@ from langgraph.checkpoint.memory import MemorySaver
 
 memory = MemorySaver()
 
+memory = MemorySaver()
 
 class GraphState(MessagesState):
     user_name: str
