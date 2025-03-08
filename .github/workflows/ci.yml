@@ -28,6 +28,7 @@ jobs:
       - name: Run tests with mocks
         env:
           PYTHONPATH: ./app
+          DATABASE_URL: "sqlite+aiosqlite:///:memory:"
         run: |
           pytest -v
 
