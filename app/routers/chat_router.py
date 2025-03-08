@@ -21,10 +21,11 @@ async def ask_via_audio(
     user_id: int = Form(...), 
     conversation_id: int = Form(...), 
     file: UploadFile = File(...),
+    languaje: str = Form("es"),
     db: AsyncSession = Depends(get_db)
 ):
     ask_via_audio = AskViaAudioService(db)
-    return await ask_via_audio.model_response_via_audio(file, user_id, conversation_id)
+    return await ask_via_audio.model_response_via_audio(file, user_id, conversation_id, languaje)
      
 @chat_router.post(
     "/text/",

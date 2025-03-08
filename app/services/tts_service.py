@@ -3,7 +3,7 @@ import asyncio
 import tempfile
 from pathlib import Path
 
-async def text_to_speech(text: str, filename: str = "response.mp3") -> str:
+async def text_to_speech(text: str, languaje: str, filename: str = "response.mp3") -> str:
     try:
         temp_dir = Path("temp")
         temp_dir.mkdir(exist_ok=True)
@@ -12,7 +12,7 @@ async def text_to_speech(text: str, filename: str = "response.mp3") -> str:
         tts = await asyncio.to_thread(
             gTTS, 
             text=text, 
-            lang='es', 
+            lang=languaje, 
             slow=False
         )
         

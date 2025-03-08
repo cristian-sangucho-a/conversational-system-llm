@@ -3,7 +3,7 @@ from tempfile import NamedTemporaryFile
 import speech_recognition as sr
 from fastapi import UploadFile, HTTPException
 
-async def speech_to_text(file: UploadFile) -> str:
+async def speech_to_text(file: UploadFile, languaje: str) -> str:
     # Read the uploaded file
     audio_data = await file.read()
     if not audio_data:
@@ -21,7 +21,7 @@ async def speech_to_text(file: UploadFile) -> str:
         recognizer = sr.Recognizer()
         with sr.AudioFile(temp_file_path) as source:
             audio_data = recognizer.record(source)
-            text = recognizer.recognize_google(audio_data, language='es-ES')
+            text = recognizer.recognize_google(audio_data, language=languaje)
         return text
     finally:
         if os.path.exists(temp_file_path):
