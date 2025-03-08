@@ -10,7 +10,7 @@ class ChatService:
         self.message_repository = MessageRepository(db)
         self.user_repository = UserRepository(db)
 
-    async def chat(self, message: str, user_id: int, conversation_id: int):
+    async def chat(self, message: str, user_id: int, conversation_id: int) -> str:
 
         # get the conversation messages
         messages_of_conversation = await self.message_repository.get_messages_by_conversation(conversation_id)

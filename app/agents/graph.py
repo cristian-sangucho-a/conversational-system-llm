@@ -6,14 +6,10 @@ from agents.model import tools
 from langgraph.checkpoint.memory import MemorySaver
 
 memory = MemorySaver()
-
-
 class GraphState(MessagesState):
     user_name: str
 
 # Define the function that calls the model
-
-
 async def call_model(state: GraphState):
     system_message = SystemMessage(
         content=f"Hello i'm {state['user_name']}, you're mi personal asistant")
