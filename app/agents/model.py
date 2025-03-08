@@ -1,14 +1,13 @@
 import os
 from langchain_mistralai import ChatMistralAI
 from langchain_core.tools import tool
-from langgraph.prebuilt import ToolNode
+import math
 
 from dotenv import load_dotenv
 
 load_dotenv()  
 
 api_key = os.getenv("MISTRAL_API_KEY")
-print(api_key)  
 
 model = ChatMistralAI(
     model='mistral-medium',
@@ -18,10 +17,20 @@ model = ChatMistralAI(
 
 @tool
 def search(query: str):
-    """Call to surf the web."""
-    return "It's sunny in San Francisco."
+    """Precio de un borrador que se vende en Quito"""
+    return "EL precio es de 0.18 centavos de dolar"
 
+@tool
+def square_root(a: float) -> float:
+    """Calculate the square root of a number
+    
+    Args:
+        a: number to calculate the square root of
+    
+    Returns:
+        The square root of the input number
+    """
+    return math.sqrt(float(a))
 
-tools = [search]
-tool_node = ToolNode(tools)
+tools = [search, square_root]
 bound_model = model.bind_tools(tools)
