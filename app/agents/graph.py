@@ -1,15 +1,19 @@
 from langgraph.graph import MessagesState, StateGraph, START
+from langchain_core.messages import SystemMessage
 from langgraph.prebuilt import tools_condition, ToolNode
 from agents.model import bound_model
 from agents.model import tools
+from langgraph.checkpoint.memory import MemorySaver
 
+memory = MemorySaver()
 
 class GraphState(MessagesState):
     user_name: str
     
 # Define the function that calls the model
 async def call_model(state: MessagesState):
-    response = await bound_model.ainvoke(state["messages"])
+    system_message = SystemMessage(content=f"Hello i'm {state['user_name']}, you're mi personal asistant")
+    response = await bound_model.ainvoke([system_message] + state["messages"])
     return {"messages": response}
 
 # Define a new graph
@@ -23,4 +27,4 @@ workflow.add_edge(START, "agent")
 workflow.add_conditional_edges("agent", tools_condition)
 workflow.add_edge("tools", "agent")
 
-graph = workflow.compile()
+graph = workflow.compile(checkpointer=memory)
