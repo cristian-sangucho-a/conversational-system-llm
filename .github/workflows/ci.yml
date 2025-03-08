@@ -23,5 +23,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build . --tag ghcr.io/cristian-sangucho-a/conversational-sistem-v1:latest
-          docker push ghcr.io/cristian-sangucho-a/conversational-sistem-v1:latest
+          docker build . --tag ghcr.io/cristian-sangucho-a/conversational-system-v1:latest
+          docker push ghcr.io/cristian-sangucho-a/conversational-system-v1:latest

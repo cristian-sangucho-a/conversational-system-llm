@@ -9,13 +9,6 @@ The system allows users to interact with a language model through endpoints. Use
 ## Project Structure
 
 ```
-.env.example
-.gitignore
-docker-compose.yml
-Dockerfile
-entrypoint.sh
-requirements.txt
-.vscode/
 app/
     __init__.py
     alembic.ini
@@ -28,6 +21,11 @@ app/
     routers/
     schemas/
     services/
+    tests/
+docker-compose.yml
+Dockerfile
+entrypoint.sh
+requirements.txt
 ```
 
 ## Dependencies
@@ -40,7 +38,9 @@ pip install -r requirements.txt
 
 ## Usage with Docker
 
-To run the project with Docker, follow these steps:
+### Using Local Dockerfile
+
+To run the project with Docker locally, follow these steps:
 
 1. Build the Docker image:
 
@@ -55,6 +55,42 @@ docker-compose up
 ```
 
 This will start the database and application services in Docker containers.
+
+### Using GitHub Container Registry
+
+You can also pull and use the pre-built image from GitHub Container Registry:
+
+1. Pull the image:
+
+```sh
+docker pull ghcr.io/cristian-sangucho-a/conversational-sistem-v1:latest
+```
+
+2. Create a `.env` file based on `.env.example` with your configuration settings
+
+3. Use docker-compose: __See docker-compose.yml__
+
+```yaml
+# In your docker-compose.yml
+services:
+  app:
+    image: ghcr.io/cristian-sangucho-a/conversational-sistem-v1:latest
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    # your database configuration
+```
+
+Then run:
+
+```sh
+docker-compose up
+```
+
 
 ## Endpoints
 
@@ -95,6 +131,18 @@ To apply the migrations, run the following command:
 alembic upgrade head
 ```
 
-## Other Services
-- **STT (Speech-to-Text)**: Service to convert audio to text using the `speech_recognition` library.
-- **TTS (Text-to-Speech)**: Service to convert text to audio using the `gTTS` library.
+## Running Tests
+
+The project uses pytest for testing. To run the tests, you need to set the PYTHONPATH environment variable to include the app directory.
+
+### Windows (PowerShell):
+
+```powershell
+$env:PYTHONPATH = "./app"; pytest -v
+```
+
+### Linux/macOS:
+
+```bash
+PYTHONPATH=./app pytest -v
+```
